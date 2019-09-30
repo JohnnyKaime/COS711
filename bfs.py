@@ -2,7 +2,10 @@ import textwrap
 
 #Modified 
 #https://github.com/hrshtpurohit/8-puzzle-solver/blob/master/bfs%20solver.py
-#ID :201451075
+#
+#Good Read:
+#https://sandipanweb.wordpress.com/2017/03/16/using-uninformed-informed-search-algorithms-to-solve-8-puzzle-n-puzzle/
+#https://blog.goodaudience.com/solving-8-puzzle-using-a-algorithm-7b509c331288
 #Breadth First Search 8-puzzle solver...
 #I have used technique similar to BFS, except for I haven't used tree
 
