@@ -10,23 +10,35 @@ import textwrap
 #I have used technique similar to BFS, except for I haven't used tree
 
 def visualGraph(board):
+	#Use textwrap to split board into 3 equal parts
 	row = textwrap.wrap(str(board),3)
 	print("---------")
 	for i in row:
+		#Each row is a list object
+		#Visualizing graph of the board
 		#quite visual, much wow
 	    print("|",*i,"|",sep=' ')
 	print("---------")
-
+#Takes in the entire board
 #Find 0, the empty space on the 3x3 board
 #
 def find_index_0(num):
 	if len(str(num))==8:
+		#Board length is only 8 
+		#Return the blank space
 		return 0
+	#Loop through all elements on the board
+	#From Top Left -> Top Mid -> etc
 	for i in range(9):
+		#Checks the last position on the board
+		#Bottom Right
 		x = num % 10
 		num = int(num/10)
+		#If its the blank space
+		#Searching from the backwards
 		if x==0:
 			break
+	#Return the position on the blank space
 	return 8-i
 
 #Converts String into a list
@@ -40,138 +52,187 @@ def swap(strr, a, b):
 	
 	return ''.join(t)
 
-def make_move(num):		#num - 9 bit number
+def make_move(num):
+	#Find 0, blank space
 	ind = find_index_0(num)
-	
+	#String wrapper
 	operate = str(num)
-	
+	#My queue
+	#For generating children
 	moved_list = []
 	
 	if len(operate)==8:
+		#Add 0 to first position
+		#Top Left of the board
 		operate = '0' + operate
-		#add 0 to first position
-	
-	if ind==0:
-		final = swap(operate, ind, 1)			#0 can go to 1 or 3
-		moved_list.append([int(final),num])
 		
+	if ind==0:
+		#If Top Left is blank space
+		#Swop with Top Mid
+		#Push it on our queue
+		final = swap(operate, ind, 1)
+		moved_list.append([int(final),num])
+		#Swop with Mid Left
+		#Push it on our queue
 		final = swap(operate, ind, 3)
 		moved_list.append([int(final),num])
 		
 	elif ind==1:
-		final = swap(operate, ind, 0)		#0 can go to 0, 2 or 4
+		#If Top Mid is blank space
+		#Swop with Top Left
+		#Push it on our queue
+		final = swap(operate, ind, 0)
+		#Since we came from Top Left, we push the other children nodes to the queue
+		#Ignore that one
 		final = final[1:]
 		moved_list.append([int(final),num])
-		
+		#Swop with Top Right
+		#Push it on our queue
 		final = swap(operate, ind, 2)
 		moved_list.append([int(final),num])
-		
+		#Swop with Mid Mid
+		#Push it on our queue
 		final = swap(operate, ind, 4)
 		moved_list.append([int(final),num])
 	
 	elif ind==2:
-		final = swap(operate, ind, 1)			#0 can go to 1 or 5
+		#Swop with Top Mid
+		#Push it on our queue
+		final = swap(operate, ind, 1)
 		moved_list.append([int(final),num])
-		
+		#Swop with Mid Right
+		#Push it on our queue
 		final = swap(operate, ind, 5)
 		moved_list.append([int(final),num])
 		
 	elif ind==3:
-		final = swap(operate, ind, 0)			#0 can go to 0, 4, or 6
+		#Swop with Top Left
+		#Push it on our queue
+		final = swap(operate, ind, 0)
+		#Since we came from Top Left, we push the other children nodes to the queue
+		#Ignore that one
 		final = final[1:]
 		moved_list.append([int(final),num])
-		
+		#Swop with Mid Mid
+		#Push it on our queue
 		final = swap(operate, ind, 4)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Left
+		#Push it on our queue
 		final = swap(operate, ind, 6)
 		moved_list.append([int(final),num])
 		
 	elif ind==4:
-		final = swap(operate, ind, 1)			#0 can go to 1, 3, 5 or 7
+		#Swop with Top Mid
+		#Push it on our queue
+		final = swap(operate, ind, 1)
 		moved_list.append([int(final),num])
-		
+		#Swop with Mid Left
+		#Push it on our queue
 		final = swap(operate, ind, 3)
 		moved_list.append([int(final),num])
-		
+		#Swop with Mid Right
+		#Push it on our queue
 		final = swap(operate, ind, 5)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Mid
+		#Push it on our queue
 		final = swap(operate, ind, 7)
 		moved_list.append([int(final),num])
 	
 	elif ind==5:
-		final = swap(operate, ind, 2)			#0 can go to 2, 4, 8
+		#Swop with Top Right
+		#Push it on our queue
+		final = swap(operate, ind, 2)
 		moved_list.append([int(final),num])
-		
+		#Swop with Mid Left
+		#Push it on our queue
 		final = swap(operate, ind, 4)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Right
+		#Push it on our queue
 		final = swap(operate, ind, 8)
 		moved_list.append([int(final),num])
 	
 	elif ind==6:
-		final = swap(operate, ind, 3)			#0 can go to 3 or 7
+		#Swop with Mid Left
+		#Push it on our queue
+		final = swap(operate, ind, 3)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Mid
+		#Push it on our queue
 		final = swap(operate, ind, 7)
 		moved_list.append([int(final),num])
 		
 	
 	elif ind==7:
-		final = swap(operate, ind, 4)				#0 can go to 4, 6, 8
+		#Swop with Mid Mid
+		#Push it on our queue
+		final = swap(operate, ind, 4)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Left
+		#Push it on our queue
 		final = swap(operate, ind, 6)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Right
+		#Push it on our queue
 		final = swap(operate, ind, 8)
 		moved_list.append([int(final),num])
 		
 	
 	elif ind==8:
-		final = swap(operate, ind, 5)			#0 can go to 5 or 7
+		#Swop with Mid Right
+		#Push it on our queue
+		final = swap(operate, ind, 5)
 		moved_list.append([int(final),num])
-		
+		#Swop with Bot Mid
+		#Push it on our queue
 		final = swap(operate, ind, 7)
 		moved_list.append([int(final),num])
 
 	return moved_list
 
-
-print("\nEnter a 9 digit number showing the orientation of the game (row wise)")
+#Input board
+print("Enter Start State of board\n")
 number = int(input())
-
-Q = []								#Queue for BFS
-Q.append([number,111111111])		#Queue contains (node, last node of level)
-
-moves = 0							#number of moves
-nodes = 0							#number of nodes traversed
+solution = 123804765
+#number = 321804965
+#Create Queue
+Q = []
+#Queue contains (node, last node of level)
+Q.append([number,111111111])		
+#No. of moves
+moves = 0
+#No. of nodes
+nodes = 0
 last = number
 
 while Q:
-	x = Q.pop(0)					#Dequeue
-	
+	#Dequeue
+	x = Q.pop(0)
 	nodes+=1
 	
 	if x[0]==last:
 		moves+=1
+	#Generate child of the node
+	listing = make_move(x[0])
 	
-	listing = make_move(x[0])		#generate child of the node
-	
-	for i in listing:				#remove previous move
+	#Remove previous move
+	#Ones we visted and next move
+	#Will be the same
+	for i in listing:
 		if i[0]==x[1]:
 			listing.remove(i)
 			break
-	
-	if listing[len(listing)-1][1]==last:			#update last element of the level
+	#Update last element of the current Board
+	if listing[len(listing)-1][1]==last:
 		last = 	listing[len(listing)-1][0]	
-	
+	#Loop through all possible states of the Board
 	for i in listing:
-		#if i[0] == 123456780:						#check for solution
-		#print(textwrap.wrap(str(i[0]),3))
+		#Visualization of the Board
 		visualGraph(i[0])
-		if i[0] == 123804765:
+		#Find solution
+		if i[0] == solution:
 			print("Number of moves - " + str(moves+1))
 			print("Number of nodes - " + str(nodes))
 			print("Solution Found!")
