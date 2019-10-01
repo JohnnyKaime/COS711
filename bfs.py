@@ -9,7 +9,17 @@ import textwrap
 #Breadth First Search 8-puzzle solver...
 #I have used technique similar to BFS, except for I haven't used tree
 
-def find_index_0(num):			#to find the position of 0 on board
+def visualGraph(board):
+	row = textwrap.wrap(str(board),3)
+	print("---------")
+	for i in row:
+		#quite visual, much wow
+	    print("|",*i,"|",sep=' ')
+	print("---------")
+
+#Find 0, the empty space on the 3x3 board
+#
+def find_index_0(num):
 	if len(str(num))==8:
 		return 0
 	for i in range(9):
@@ -18,8 +28,11 @@ def find_index_0(num):			#to find the position of 0 on board
 		if x==0:
 			break
 	return 8-i
-	
-def swap(strr, a, b):			#to swap for 2 positions
+
+#Converts String into a list
+#Swaps the 2 puzzles or numbers
+#Converts list back to String
+def swap(strr, a, b):
 	t = list(strr)
 	temp = t[a]
 	t[a] = t[b]
@@ -29,9 +42,6 @@ def swap(strr, a, b):			#to swap for 2 positions
 
 def make_move(num):		#num - 9 bit number
 	ind = find_index_0(num)
-	
-	#print(ind)
-	#exit()
 	
 	operate = str(num)
 	
@@ -159,8 +169,8 @@ while Q:
 	
 	for i in listing:
 		#if i[0] == 123456780:						#check for solution
-		print(textwrap.wrap(str(i[0]),3))
-		print()
+		#print(textwrap.wrap(str(i[0]),3))
+		visualGraph(i[0])
 		if i[0] == 123804765:
 			print("Number of moves - " + str(moves+1))
 			print("Number of nodes - " + str(nodes))
